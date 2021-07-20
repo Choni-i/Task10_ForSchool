@@ -85,35 +85,35 @@ public class ReadFile {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel(); // получаем таблицу
         List<ApartmentFilter> list = new ArrayList<>();
             try {
-                for(int i =0; i<2; i++){
+                for(int i =1; i<3; i++){
                     for(int j =0; j<4; j++) {
                         if (getTrueOrFalse(tableModel, i, j)){
-                            if (i==0){
-                                if (j==0){
-                                    list.add(Filters.roomsGreaterThan(getIntFromTableModelCell(tableModel, 0, 0)));
-                                }
-                                if (j==1){
-                                    list.add(Filters.S_generalGreaterThan(getIntFromTableModelCell(tableModel, 0, 1)));
-                                }
-                                if (j==2){
-                                    list.add(Filters.S_kitchenGreaterThan(getIntFromTableModelCell(tableModel, 0, 2)));
-                                }
-                                if (j==3){
-                                    list.add(Filters.priceGreaterThan(getIntFromTableModelCell(tableModel, 0, 3)));
-                                }
-                            }
                             if (i==1){
                                 if (j==0){
-                                    list.add(Filters.roomsLessThan(getIntFromTableModelCell(tableModel, 1, 0)));
+                                    list.add(Filters.roomsGreaterThan(getIntFromTableModelCell(tableModel, 1, 0)));
                                 }
                                 if (j==1){
-                                    list.add(Filters.S_generalLessThan(getIntFromTableModelCell(tableModel, 1, 1)));
+                                    list.add(Filters.S_generalGreaterThan(getIntFromTableModelCell(tableModel, 1, 1)));
                                 }
                                 if (j==2){
-                                    list.add(Filters.S_kitchenLessThan(getIntFromTableModelCell(tableModel, 1, 2)));
+                                    list.add(Filters.S_kitchenGreaterThan(getIntFromTableModelCell(tableModel, 1, 2)));
                                 }
                                 if (j==3){
-                                    list.add(Filters.priceLessThan(getIntFromTableModelCell(tableModel, 1, 3)));
+                                    list.add(Filters.priceGreaterThan(getIntFromTableModelCell(tableModel, 1, 3)));
+                                }
+                            }
+                            if (i==2){
+                                if (j==0){
+                                    list.add(Filters.roomsLessThan(getIntFromTableModelCell(tableModel, 2, 0)));
+                                }
+                                if (j==1){
+                                    list.add(Filters.S_generalLessThan(getIntFromTableModelCell(tableModel, 2, 1)));
+                                }
+                                if (j==2){
+                                    list.add(Filters.S_kitchenLessThan(getIntFromTableModelCell(tableModel, 2, 2)));
+                                }
+                                if (j==3){
+                                    list.add(Filters.priceLessThan(getIntFromTableModelCell(tableModel, 2, 3)));
                                 }
                             }
                         }
@@ -136,7 +136,7 @@ public class ReadFile {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel(); // получаем таблицу
         List<Apartment> list = new ArrayList<>();
         try {
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
+            for (int i = 1; i < tableModel.getRowCount(); i++) {
                 list.add(new Apartment(String.valueOf(tableModel.getValueAt(i, 0)), getIntFromTableModelCell(tableModel, i, 1), getIntFromTableModelCell(tableModel, i, 2),getIntFromTableModelCell(tableModel, i, 3), getIntFromTableModelCell(tableModel, i, 4)));
             }
             return list;
@@ -161,8 +161,13 @@ public class ReadFile {
      public static void writeListOfListIntoJtable(JTable table, List<Apartment> list) { //прочитать из листа, записать в табличку
          DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
          tableModel.setColumnCount(5);
-         tableModel.setRowCount(list.size());
-         int i = 0;
+         tableModel.setRowCount(list.size() + 1);
+         int i = 1;
+         tableModel.setValueAt("Район", 0, 0);
+         tableModel.setValueAt("Кол-во комнат", 0, 1);
+         tableModel.setValueAt("Площадь(м²)", 0, 2);
+         tableModel.setValueAt("Площадь кухни(м²)", 0, 3);
+         tableModel.setValueAt("Стоимость(руб.)", 0, 4);
          for(Apartment apartment: list){
                 tableModel.setValueAt(apartment.getDistrict(), i, 0);
                 tableModel.setValueAt(apartment.getRooms(), i, 1);
@@ -173,16 +178,16 @@ public class ReadFile {
         }
     }
 
-    public static void writeListFiltersOfListIntoJtable(JTable table, List<ApartmentFilter> list) { //прочитать из листа, записать в табличку
+    public static void writeListFilters(JTable table) { //написать название стобцов
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        tableModel.setColumnCount(4);
-        tableModel.setRowCount(list.size()*2);
-        int j = 0;
-        for(ApartmentFilter apartment: list){
-            tableModel.setValueAt(apartment, j, 0);
-            tableModel.setValueAt(apartment, j, 1);
-            j++;
-        }
+        tableModel.setColumnCount(5);
+        tableModel.setRowCount(3);
+        tableModel.setValueAt("Кол-во комнат", 0, 0);
+        tableModel.setValueAt("Площадь(м²)", 0, 1);
+        tableModel.setValueAt("Площадь кухни(м²)", 0, 2);
+        tableModel.setValueAt("Стоимость(руб.)", 0, 3);
+        tableModel.setValueAt("Минимум", 1, 4);
+        tableModel.setValueAt("Максимум", 2, 4);
     }
     public static void writeListToFile(String file, List<Apartment> list) throws IOException {
         FileWriter fileWriter = new FileWriter(file);
@@ -194,7 +199,7 @@ public class ReadFile {
             fileWriter.append("Результат:" + "\n");
             for (Apartment apartment : list) {
                 fileWriter.append(i + ". ");
-                fileWriter.append("Район:" + apartment.getDistrict() + " " + "Комнат:" + apartment.getRooms() + " " + "Общая площадь(м^2):" + apartment.getS_general() + " " + "Площадь кухни(м^2)" + apartment.getS_kitchen() + " " + "Стоимость(руб.):" + apartment.getPrice());
+                fileWriter.append("Район:" + apartment.getDistrict() + " " + "Комнат:" + apartment.getRooms() + " " + "Общая площадь(м²):" + apartment.getS_general() + " " + "Площадь кухни(м²)" + apartment.getS_kitchen() + " " + "Стоимость(руб.):" + apartment.getPrice());
                 fileWriter.append("\n");
                 i++;
             }
