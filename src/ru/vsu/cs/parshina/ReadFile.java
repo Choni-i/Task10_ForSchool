@@ -149,13 +149,15 @@ public class ReadFile {
     public static void writeJtableSorry(JTable table) { //если не нашлось квартиры по заданным условиям
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.setColumnCount(5);
-        tableModel.setRowCount(1);
-            tableModel.setValueAt("S", 0, 0);
-            tableModel.setValueAt("O", 0, 1);
-            tableModel.setValueAt("R", 0, 2);
-            tableModel.setValueAt("R", 0, 3);
-            tableModel.setValueAt("Y", 0, 4);
-
+        tableModel.setRowCount(2);
+        tableModel.setValueAt("Район", 0, 0);
+        tableModel.setValueAt("Кол-во комнат", 0, 1);
+        tableModel.setValueAt("Площадь(м²)", 0, 2);
+        tableModel.setValueAt("Площадь кухни(м²)", 0, 3);
+        tableModel.setValueAt("Стоимость(руб.)", 0, 4);
+        for(int i =0;i<5;i++) {
+            tableModel.setValueAt("-", 1, i);
+        }
     }
 
      public static void writeListOfListIntoJtable(JTable table, List<Apartment> list) { //прочитать из листа, записать в табличку

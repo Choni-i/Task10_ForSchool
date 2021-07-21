@@ -45,7 +45,7 @@ public class MainForm extends JFrame {
 
     public MainForm() throws FileNotFoundException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(3000, 600);
+        this.setSize(1500, 600);
         this.setTitle("Почти циан");
         this.setLocationRelativeTo(null);
         // this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,9 +55,9 @@ public class MainForm extends JFrame {
         JTableUtils.initJTableForArray(DataTable, 110, true, false, false, false);
         JTableUtils.initJTableForArray(OutputTable, 110, true, false, false, false);
 
-        JTableUtils.resizeJTable(InputTable, 3, 5, 25, -1);
-        JTableUtils.resizeJTable(DataTable, 2, 5, 25, -1);
-        JTableUtils.resizeJTable(OutputTable, 1, 5, 25, -1);
+        JTableUtils.resizeJTable(InputTable, 3, 5, 25, 175);
+        JTableUtils.resizeJTable(DataTable, 2, 5, 25, 175);
+        JTableUtils.resizeJTable(OutputTable, 2, 5, 25, 175);
         ReadFile.writeListFilters(InputTable);
         fileChooserOpen = new JFileChooser();
         fileChooserSave = new JFileChooser();
@@ -69,7 +69,7 @@ public class MainForm extends JFrame {
         fileChooserOpen.addChoosableFileFilter(filter);
         fileChooserOpen.addChoosableFileFilter(filter);
         fileChooserSave.addChoosableFileFilter(filter);
-        InputTable.getColumnModel().getColumn(0).setHeaderValue("Код1"); // задаем название столбца
+
 
         fileChooserSave.setAcceptAllFileFilterUsed(false);
         fileChooserSave.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -138,7 +138,6 @@ public class MainForm extends JFrame {
                     List<Apartment> result = Logical.Operation(data, filterList);
                     if (result.size() == 0){
                         ReadFile.writeJtableSorry(OutputTable);
-
                     }else {
                     JTableUtils.resizeJTable(OutputTable, result.size()+1, 5, -1, 175);
                     ReadFile.writeListOfListIntoJtable(OutputTable, result);
