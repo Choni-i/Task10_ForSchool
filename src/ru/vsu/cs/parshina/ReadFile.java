@@ -18,17 +18,19 @@ public class ReadFile {
 
     public static List<Apartment> readListFromFile(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
-
         List<Apartment> list = new ArrayList<>();
         try {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (line.length() == 0) {
+            if (line.length() == 0 ) {
                 continue;
             }
          //   if (Character.isDigit(line.charAt(0))) {
-                String[] parts = line.split(":");
-                list.add(new Apartment((parts[1]), Integer.parseInt(parts[3]), Integer.parseInt(parts[5]), Integer.parseInt(parts[7]), Integer.parseInt(parts[9])));
+                String[] parts = line.split(" ");
+            if (parts[0].equals("//")) {
+                continue;
+            }
+                list.add(new Apartment((parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4])));
            // }
         }
         return list;
@@ -201,7 +203,7 @@ public class ReadFile {
             fileWriter.append("Результат:" + "\n");
             for (Apartment apartment : list) {
                 fileWriter.append(i + ". ");
-                fileWriter.append("Район:" + apartment.getDistrict() + " " + "Комнат:" + apartment.getRooms() + " " + "Общая площадь(м²):" + apartment.getS_general() + " " + "Площадь кухни(м²)" + apartment.getS_kitchen() + " " + "Стоимость(руб.):" + apartment.getPrice());
+                fileWriter.append("Район:" + apartment.getDistrict() + ", " + "Комнат:" + apartment.getRooms() + ", " + "Общая площадь(м²):" + apartment.getS_general() + ", " + "Площадь кухни(м²):" + apartment.getS_kitchen() + ", " + "Стоимость(руб.):" + apartment.getPrice()+ ".");
                 fileWriter.append("\n");
                 i++;
             }
@@ -209,24 +211,7 @@ public class ReadFile {
         }
     }
 
-   /* public static void printList(List<ApartmentFilter> list){
-        for(int i = 0; i< list.size(); i++){
-            System.out.println(list.get(i)+ "\n");
-        }
-    }
-    public static void main(String[] args){
-        try {
-            List<Apartment> list = new ArrayList<>();
-            list.add(new Apartment("Ляля", 12, 88, 90, 909090));
-            // }
-            writeListToFile("proba", list);
 
-        } catch (Exception e) {
-            System.err.println("Ошибка загруки студентов!");
-            return;
-        }
-
-    }*/
 
 
 }

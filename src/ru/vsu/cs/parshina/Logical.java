@@ -25,6 +25,9 @@ public class Logical {
         }
         return result;
     }
+
+
+
     public static List<Integer> readListFromFile(String path) throws FileNotFoundException, NullPointerException, InputMismatchException {
         try (Scanner scanner = new Scanner(new File(path))) {
             List<Integer> list = new ArrayList<>();

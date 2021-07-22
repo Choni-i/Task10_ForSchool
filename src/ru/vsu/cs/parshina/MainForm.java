@@ -111,14 +111,16 @@ public class MainForm extends JFrame {
                         }else {
                         JTableUtils.resizeJTable(OutputTable, result.size()+1, 5, -1, 175);
                         ReadFile.writeListOfListIntoJtable(OutputTable, result);
-                        /*if (fileChooserSave.showSaveDialog(MainPanel) == JFileChooser.APPROVE_OPTION) {
-                            String file = fileChooserSave.getSelectedFile().getPath();
-                            if (!file.toLowerCase().endsWith(".txt")) {
-                                file += ".txt";
+                            if (fileChooserSave.showSaveDialog(MainPanel) == JFileChooser.APPROVE_OPTION) {
+                                String file = fileChooserSave.getSelectedFile().getPath();
+                                if (!file.toLowerCase().endsWith(".txt")) {
+                                    file += ".txt";
+                                }
+                                ReadFile.writeListToFile(file, result);
                             }
-                            //Logical logical = new Logical();
-                            ReadFile.writeListToFile(file, result);
-                    }*/}
+                        }
+
+
                 }} catch (Exception e) {
                     SwingUtils.showErrorMessageBox(e);
                 }
@@ -162,7 +164,6 @@ public class MainForm extends JFrame {
                         }
                         Logical logical = new Logical();
                         ReadFile.writeListToFile(file, Logical.Operation(data, list));
-
                     }
                 } catch (Exception e) {
                     SwingUtils.showErrorMessageBox(e);
@@ -170,9 +171,6 @@ public class MainForm extends JFrame {
             }
         });
     }
-
-
-
 
     private void createUIComponents() {
 
