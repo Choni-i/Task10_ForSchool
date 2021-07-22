@@ -1,12 +1,12 @@
 package ru.vsu.cs.parshina;
 
-public  class CmdParams {  // создаем класс, который хранит параметры
-     String dataFile;
-     String inputFile;
-     String outputFile;
-     public boolean error = false; // ошибка выводится из функции parseArgs
-     boolean help;
-     boolean window;
+public class CmdParams {  // создаем класс, который хранит параметры
+    String dataFile;
+    String inputFile;
+    String outputFile;
+    public boolean error = false; // ошибка выводится из функции parseArgs
+    boolean help;
+    boolean window;
 
     public static CmdParams parseArgs(String[] args) { // спорный момент про вывод ошибки
         CmdParams params = new CmdParams(); // создает объект, чтобы изменять параметры
@@ -14,7 +14,7 @@ public  class CmdParams {  // создаем класс, который хран
             params.window = true;
             return params;
         }
-        if (args[0].endsWith(".txt") && args[1].endsWith(".txt") && args[2].endsWith(".txt")){
+        if (args[0].endsWith(".txt") && args[1].endsWith(".txt") && args[2].endsWith(".txt")) {
             params.dataFile = args[0];
             params.inputFile = args[1];
             params.outputFile = args[2];

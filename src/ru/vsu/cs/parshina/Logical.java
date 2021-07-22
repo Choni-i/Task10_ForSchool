@@ -12,8 +12,8 @@ public class Logical {
     public static List<Apartment> Operation(List<Apartment> list, List<ApartmentFilter> filterList) {
         List<Apartment> result = new ArrayList<>();
         boolean flag = false;
-        for (Apartment apartment: list){
-            for (ApartmentFilter filter: filterList) {
+        for (Apartment apartment : list) {
+            for (ApartmentFilter filter : filterList) {
                 if (filter.runFilter(apartment)) {
                     flag = true;
                 } else {
@@ -21,11 +21,12 @@ public class Logical {
                     break;
                 }
             }
-            if (flag) { result.add(apartment);}
+            if (flag) {
+                result.add(apartment);
+            }
         }
         return result;
     }
-
 
 
     public static List<Integer> readListFromFile(String path) throws FileNotFoundException, NullPointerException, InputMismatchException {
@@ -46,6 +47,7 @@ public class Logical {
             }
         }
     }
+
     /*public static List<Integer> intArrayToList(int[] arr) {
         return Arrays.stream(arr).boxed().collect(Collectors.toList());
     }

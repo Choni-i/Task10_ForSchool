@@ -7,6 +7,4 @@ public class ApartmentFilters implements ApartmentFilter {
     }
 
 
-
-
-    }
+}

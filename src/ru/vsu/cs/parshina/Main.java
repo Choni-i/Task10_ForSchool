@@ -34,7 +34,7 @@ public class Main {
             winMain();
             return;
         }
-        if (params.error){
+        if (params.error) {
             System.out.print("Error in Input/Output stream");
         }
         if (params.help) {
@@ -53,8 +53,6 @@ public class Main {
             System.out.println("--window // show window");
             System.out.println("-w");
             System.out.println();
-         /* System.out.println("If there is not input-file or output-file");
-            System.out.println("It will rewrite existing one."); */
             System.out.println("If there are not any input-file and output-file");
             System.out.println("It will returns error in Error Stream");
             System.out.println();
@@ -63,7 +61,7 @@ public class Main {
             winMain();
         } else {
 
-            List<ApartmentFilter> list = ReadFile.readInputFromFile(params.inputFile);
+            List<Apartment> list = ReadFile.readInputFromFile(params.inputFile);
             List<Apartment> data = ReadFile.readListFromFile(params.dataFile);
             if (list.size() == 0) {
                 System.err.println("Can't read");
@@ -71,11 +69,11 @@ public class Main {
             }
             Logical logical = new Logical();
             //Logical.Operation(data, list);
-            ReadFile.writeListToFile(params.outputFile, Logical.Operation(data, list));
+            //ReadFile.writeListToFile(params.outputFile, Logical.Operation(data, list));
         }
 
 
     }
-    }
+}
 
 
