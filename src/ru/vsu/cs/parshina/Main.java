@@ -1,6 +1,7 @@
 package ru.vsu.cs.parshina;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import ru.vsu.cs.parshina.util.SwingUtils;
@@ -19,7 +20,7 @@ public class Main {
             public void run() {
                 try {
                     new MainForm().setVisible(true);
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

@@ -1,6 +1,7 @@
 package ru.vsu.cs.parshina;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class MainForm extends JFrame {
     private JScrollPane InputDataPanel;
     private JTable DataTable;
     private JButton DataButton;
+    private JButton button1;
 
 
     private JFileChooser fileChooserOpen;  // выбор директории
@@ -43,8 +46,9 @@ public class MainForm extends JFrame {
     private JMenuBar menuBarMain;  // выбор меню, но он удален
 
 
-    public MainForm() throws FileNotFoundException {
+    public MainForm() throws IOException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setIconImage(ImageIO.read(new File("res/favicon.png")));
         this.setSize(1500, 600);
         this.setTitle("Демо-версия циан");
         this.setLocationRelativeTo(null);
@@ -63,9 +67,9 @@ public class MainForm extends JFrame {
         fileChooserOpen = new JFileChooser();
         fileChooserSave = new JFileChooser();
         fileChooserSave = new JFileChooser();
-        fileChooserOpen.setCurrentDirectory(new File("."));
-        fileChooserOpen.setCurrentDirectory(new File("."));
-        fileChooserSave.setCurrentDirectory(new File("."));
+        fileChooserOpen.setCurrentDirectory(new File("./examples/"));
+        fileChooserOpen.setCurrentDirectory(new File("./examples/"));
+        fileChooserSave.setCurrentDirectory(new File("./examples/"));
         FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
         fileChooserOpen.addChoosableFileFilter(filter);
         fileChooserOpen.addChoosableFileFilter(filter);
@@ -101,7 +105,8 @@ public class MainForm extends JFrame {
                     if (fileChooserOpen.showOpenDialog(MainPanel) == JFileChooser.APPROVE_OPTION) {
                         Logical logical = new Logical();
                         ReadFile.writeNullIntoJtable(InputTable);
-                        ReadFile.readInputFromFileInJTable(InputTable, fileChooserOpen.getSelectedFile().getPath());}
+                        ReadFile.readInputFromFileInJTable(InputTable, fileChooserOpen.getSelectedFile().getPath());
+                    }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Выберите корректный файл.", "Некорректные данные", JOptionPane.ERROR_MESSAGE);
                 }
@@ -129,6 +134,7 @@ public class MainForm extends JFrame {
                         //ReadFile.writeNullIntoJtable(InputTable);
                     }
                 } catch (Exception e) {
+                    //SwingUtils.showErrorMessageBox(e);
                     JOptionPane.showMessageDialog(null, "Введите число", "Некорректные данные", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -154,7 +160,16 @@ public class MainForm extends JFrame {
                 }
             }
         });
+
+
+        button1.addActionListener(new ActionListener() { // прочитать из таблицы, записать в файл
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(null, "Выберите фалй с квартирами, далее внесите характеристики(из файла или с клавиатуры) и нажмите кнопку 'Выполнить'. При необходимости, сохраните результат в файл.", "Помощь", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
+
 
     private void createUIComponents() {
 
