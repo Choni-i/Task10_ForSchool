@@ -36,11 +36,10 @@ public class ReadFile {
         return list;
     }
 
-    public static List<Apartment> readInputFromFile(String filename) throws FileNotFoundException {
+    public static void readInputFromFileInJTable(JTable table, String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
-        List<Apartment> list = new LinkedList<>();
-        Apartment apartmentMin = null;
-        Apartment apartmentMax = null;
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
         try {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -50,36 +49,35 @@ public class ReadFile {
                 //if (Character.isDigit(line.charAt(0))) {
                 String[] parts = line.split(":");
                 if (parts[0].equals("Мин.комнат")) {
-                    //assert false;
-                    apartmentMin.setRooms(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 1, 0);
                 }
                 if (parts[0].equals("Макс.комнат")) {
-                    apartmentMax.setRooms(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 2, 0);
                 }
                 if (parts[0].equals("Мин.площадь")) {
-                    apartmentMin.setS_general(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 1, 1);
                 }
                 if (parts[0].equals("Макс.площадь")) {
-                    apartmentMax.setS_general(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 2, 1);
                 }
                 if (parts[0].equals("Мин.площадь кухни")) {
-                    apartmentMin.setS_kitchen(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 1, 2);
                 }
                 if (parts[0].equals("Макс.площадь кухни")) {
-                    apartmentMax.setS_kitchen(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 2, 2);
                 }
                 if (parts[0].equals("Мин.стоимость")) {
-                    apartmentMin.setPrice(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 1, 3);
                 }
                 if (parts[0].equals("Макс.стоимость")) {
-                    apartmentMax.setPrice(Integer.parseInt(parts[1]));
+                    tableModel.setValueAt(Integer.parseInt(parts[1]), 2, 3);
                 }
                 // }
+
             }
         } catch (NumberFormatException e) {
             SwingUtils.showErrorMessageBox("ErROR", "Error", e);
         }
-        return list;
     }
 
     public static List<ApartmentFilter> readListFiltersFromJtable(JTable table) { //прочитать из таблицы, записать в лист
@@ -129,7 +127,10 @@ public class ReadFile {
     }
 
     public static boolean getTrueOrFalse(DefaultTableModel tableModel, int i, int j) {
-        return (tableModel.getValueAt(i, j)) != null || (tableModel.getValueAt(i, j)) != "";
+        if (tableModel.getValueAt(i, j) == "") {
+            return false;
+        }
+        return (tableModel.getValueAt(i, j) != null);
     }
 
     public static int getIntFromTableModelCell(DefaultTableModel tableModel, int i, int j) {
@@ -184,19 +185,15 @@ public class ReadFile {
         }
     }
 
-    public static void writeFiltersListOfListIntoJtable(JTable table, List<Apartment> list) { //прочитать из листа, записать в табличку
+    public static void writeNullIntoJtable(JTable table) {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        tableModel.setColumnCount(5);
-        int i = 1;
-        for (Apartment apartment : list) {
-            tableModel.setValueAt(apartment.getRooms(), i, 0);
-            tableModel.setValueAt(apartment.getS_general(), i, 1);
-            tableModel.setValueAt(apartment.getS_kitchen(), i, 2);
-            tableModel.setValueAt(apartment.getPrice(), i, 3);
-            i++;
+        for (int i = 1; i < 3; i++) {
+            tableModel.setValueAt(null, i, 0);
+            tableModel.setValueAt(null, i, 1);
+            tableModel.setValueAt(null, i, 2);
+            tableModel.setValueAt(null, i, 3);
         }
     }
-
 
 
     public static void writeListFilters(JTable table) { //написать название стобцов
@@ -230,6 +227,47 @@ public class ReadFile {
     }
 
 
+    public static List<ApartmentFilter> readInputFromFile(String filename) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filename));
+        List<ApartmentFilter> list = new LinkedList<>();
+        try {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.length() == 0) {
+                    continue;
+                }
+                //if (Character.isDigit(line.charAt(0))) {
+                String[] parts = line.split(":");
+                if (parts[0].equals("Мин.комнат")) {
+                    list.add(Filters.roomsGreaterThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Макс.комнат")) {
+                    list.add(Filters.roomsLessThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Мин.площадь")) {
+                    list.add(Filters.S_generalGreaterThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Макс.площадь")) {
+                    list.add(Filters.S_generalLessThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Мин.площадь кухни")) {
+                    list.add(Filters.S_kitchenGreaterThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Макс.площадь кухни")) {
+                    list.add(Filters.S_kitchenLessThan(Integer.parseInt(parts[1])));
+                }
+                if (parts[0].equals("Мин.стоимость")) {
+                    list.add(Filters.priceGreaterThan((Integer.parseInt(parts[1]))));
+                }
+                if (parts[0].equals("Макс.стоимость")) {
+                    list.add(Filters.priceLessThan(Integer.parseInt(parts[1])));
+                }
+                // }
+            }
+        } catch (NumberFormatException e) {
+            SwingUtils.showErrorMessageBox("ErROR", "Error", e);
+        }
+        return list;
+    }
 
 }
-

@@ -100,8 +100,8 @@ public class MainForm extends JFrame {
                 try {
                     if (fileChooserOpen.showOpenDialog(MainPanel) == JFileChooser.APPROVE_OPTION) {
                         Logical logical = new Logical();
-                        List<Apartment> filterList = ReadFile.readListFromFile(fileChooserOpen.getSelectedFile().getPath());
-                        ReadFile.writeFiltersListOfListIntoJtable(DataTable, filterList);}
+                        ReadFile.writeNullIntoJtable(InputTable);
+                        ReadFile.readInputFromFileInJTable(InputTable, fileChooserOpen.getSelectedFile().getPath());}
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Выберите корректный файл.", "Некорректные данные", JOptionPane.ERROR_MESSAGE);
                 }
@@ -122,10 +122,11 @@ public class MainForm extends JFrame {
                     List<Apartment> result = Logical.Operation(data, filterList);
                     if (result.size() == 0) {
                         ReadFile.writeJtableSorry(OutputTable);
+                        JOptionPane.showMessageDialog(null, "По вашим характеристикам квартир не найдено!", "Грустно, но...", JOptionPane.ERROR_MESSAGE);
                     } else {
                         JTableUtils.resizeJTable(OutputTable, result.size() + 1, 5, -1, 175);
                         ReadFile.writeListOfListIntoJtable(OutputTable, result);
-
+                        //ReadFile.writeNullIntoJtable(InputTable);
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Введите число", "Некорректные данные", JOptionPane.ERROR_MESSAGE);

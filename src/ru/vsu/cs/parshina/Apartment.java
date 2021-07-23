@@ -15,6 +15,8 @@ public class Apartment {
         this.Price = Price;
     }
 
+
+
     public String getDistrict() {
         return District;
     }
@@ -35,12 +37,5 @@ public class Apartment {
         return Price;
     }
 
-    public void setRooms(int Rooms) { this.Rooms = Rooms;
-    }
-    public void setS_kitchen(int S_kitchen) { this.S_kitchen = S_kitchen;;
-    }
-    public void setS_general(int S_general) { this.S_general = S_general;
-    }
-    public void setPrice(int Price) { this.Price = Price;
-    }
+
 }

@@ -61,7 +61,7 @@ public class Main {
             winMain();
         } else {
 
-            List<Apartment> list = ReadFile.readInputFromFile(params.inputFile);
+            List<ApartmentFilter> list = ReadFile.readInputFromFile(params.inputFile);
             List<Apartment> data = ReadFile.readListFromFile(params.dataFile);
             if (list.size() == 0) {
                 System.err.println("Can't read");
@@ -69,7 +69,7 @@ public class Main {
             }
             Logical logical = new Logical();
             //Logical.Operation(data, list);
-            //ReadFile.writeListToFile(params.outputFile, Logical.Operation(data, list));
+            ReadFile.writeListToFile(params.outputFile, Logical.Operation(data, list));
         }
 
 
