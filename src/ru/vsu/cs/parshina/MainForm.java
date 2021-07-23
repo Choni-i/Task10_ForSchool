@@ -134,8 +134,8 @@ public class MainForm extends JFrame {
                         //ReadFile.writeNullIntoJtable(InputTable);
                     }
                 } catch (Exception e) {
-                    //SwingUtils.showErrorMessageBox(e);
-                    JOptionPane.showMessageDialog(null, "Введите число", "Некорректные данные", JOptionPane.ERROR_MESSAGE);
+                    SwingUtils.showErrorMessageBox(e);
+                    //JOptionPane.showMessageDialog(null, "Введите число", "Некорректные данные", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

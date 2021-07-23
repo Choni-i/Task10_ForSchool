@@ -127,9 +127,9 @@ public class ReadFile {
     }
 
     public static boolean getTrueOrFalse(DefaultTableModel tableModel, int i, int j) {
-        /*if (tableModel.getValueAt(i, j).equals("") ) {
+        if (String.valueOf(tableModel.getValueAt(i, j)).equals("") ) {
             return false;
-        }*/
+        }
         return (tableModel.getValueAt(i, j) != null);
     }
 
